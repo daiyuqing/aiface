@@ -1,0 +1,10 @@
+<!--index.wxml-->
+<view class="container">
+  <image  src="{{src}}" mode="aspectFit" class='upload-img'></image>
+  <view class='result'>
+    <text class="user-motto">年龄：{{face.age}}</text>
+    <text class="user-motto">打分：{{face.beauty}}</text>
+    <text class="user-motto">情绪：{{face.emotion.type}}</text>
+  </view>
+  <button type="primary" bindtap="bindViewTap">选择图片</button>
+</view>
