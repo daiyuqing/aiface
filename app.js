@@ -1,14 +1,25 @@
 //app.js
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
+    var self=this;
+    wx.cloud.init({
+      env: 'aiface-k8f2i',
+      traceUser:true
+    })
+    self.globalData.db = wx.cloud.database({
+      env: 'aiface-k8f2i'
+    })
+    wx.cloud.callFunction({
+      name: 'login',
+      complete: res => {
+        console.log('callFunction test result: ', res)
+        self.globalData.openid = res.result.openid;
+      }
+    })
     // 登录
     wx.login({
       success: res => {
+        console.log(res)
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
@@ -19,14 +30,36 @@ App({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
-              // 可以将 res 发送给后台解码出 unionId
-              this.globalData.userInfo = res.userInfo
-
-              // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-              // 所以此处加入 callback 以防止这种情况
-              if (this.userInfoReadyCallback) {
-                this.userInfoReadyCallback(res)
-              }
+              self.addUser(res.userInfo)
+              self.globalData.userInfo=res.userInfo;
+            }
+          })
+        }
+      }
+    })
+  },
+  addUser: function (userInfo){
+    var self=this;
+    self.globalData.db.collection('users').where({
+      _openid:self.globalData.openid // 填入当前用户 openid
+    }).get({
+      success: function (res) {
+        if(res.data.length==0){
+          self.globalData.db.collection('users').add({
+            data: {
+              userInfo: userInfo
+            },
+            success: function (res) {
+              console.log(res)
+            }
+          })
+        }else{
+          self.globalData.db.collection('users').doc(res.data[0]._id).update({
+            data: {
+              userInfo: userInfo
+            },
+            success: function (res) {
+              console.log(res)
             }
           })
         }
@@ -34,6 +67,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    openid:''
   }
 })

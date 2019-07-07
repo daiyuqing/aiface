@@ -3,6 +3,7 @@
 	"packOptions": {
 		"ignore": []
 	},
+  "cloudfunctionRoot": "functions/",
 	"setting": {
 		"urlCheck": true,
 		"es6": true,

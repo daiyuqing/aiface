@@ -3,8 +3,13 @@
   <image  src="{{src}}" mode="aspectFit" class='upload-img'></image>
   <view class='result'>
     <text class="user-motto">年龄：{{face.age}}</text>
-    <text class="user-motto">打分：{{face.beauty}}</text>
-    <text class="user-motto">情绪：{{face.emotion.type}}</text>
+    <text class="user-motto">性别：{{face.gender.type=='male'?'男':'女'}}</text>
+    <text class="user-motto">情绪：{{emotion[face.emotion.type]}}</text>
+    <text class="user-motto">脸型：{{face_shape[face.face_shape.type]}}</text>
+    <text class="user-motto">表情：{{expression[face.expression.type]}}</text>
+    <text class="user-motto">是否戴眼镜：{{glasses[face.glasses.type]}}</text>
+    <text class="user-motto">人种：{{race[face.race.type]}}</text>
+    <text class="user-motto">打分：{{face.beauty+20}}</text>
   </view>
-  <button type="primary" bindtap="bindViewTap">选择图片</button>
+  <button type="primary" open-type="getUserInfo" bindgetuserinfo="selectPhoto">选择美照</button>
 </view>
