@@ -98,7 +98,8 @@ Page({
                 data: {
                   userInfo: app.globalData.userInfo,
                   photo: url,
-                  result: result
+                  result: result,
+                  time: new Date().toLocaleString()
                 },
                 success: function (res) {
                   console.log(res)

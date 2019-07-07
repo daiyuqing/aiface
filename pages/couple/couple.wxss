@@ -1,0 +1,15 @@
+.photos{
+  display: flex;
+  margin: 50rpx 0;
+}
+.photos image{
+  width: 375rpx;
+  height: 375rpx;
+}
+.result{
+  margin: 100rpx;
+}
+.result progress{
+  margin: 20rpx auto;
+  width: 400rpx;
+}

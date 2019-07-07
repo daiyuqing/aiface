@@ -1,0 +1,8 @@
+<view class="container">
+  <view class='photos'>
+    <image  mode="aspectFit" src="{{src1}}"></image>
+    <image  mode="aspectFit" src="{{src2}}"></image>
+  </view>
+  <view class='result'>夫妻相指数：<progress percent="{{score}}" active show-info stroke-width="12" activeColor="pink" /></view>
+  <button type="primary" open-type="getUserInfo" bindgetuserinfo="selectPhoto">上传你和他/她的照片</button>
+</view>

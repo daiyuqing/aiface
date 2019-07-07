@@ -12,7 +12,6 @@ App({
     wx.cloud.callFunction({
       name: 'login',
       complete: res => {
-        console.log('callFunction test result: ', res)
         self.globalData.openid = res.result.openid;
       }
     })
