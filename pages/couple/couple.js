@@ -23,6 +23,17 @@ Page({
     wx.chooseImage({
       count:2,
       success: res => {
+        if (res.tempFilePaths.length<2){
+          wx.showModal({
+            title: '测试失败',
+            content: '请上传两张照片',
+            showCancel: false,
+            success(res) {
+
+            }
+          })
+          return;
+        }
         var path1 = res.tempFilePaths[0];
         var path2 = res.tempFilePaths[1];
         var fileID1='';
@@ -97,7 +108,6 @@ Page({
       },
       success(res) {
         wx.hideLoading()
-        console.log(res)
         if (res.data.error_code == 0) {
           var score = res.data.result.score;
           score = parseInt(score*3);
