@@ -27,14 +27,25 @@
 .upload-img{
   width: 400rpx;
   height: 400rpx;
-  margin: 50rpx auto;
+  margin: 20rpx auto;
 }
 .result{
   width: 400rpx;
-  margin: 50rpx auto;
+  margin: 20rpx auto;
+  /* border: 1rpx solid #ccc; */
+  padding: 30rpx 100rpx;
+  border-radius: 20rpx;
+  background-color: #1296db;
+  
 }
 .result text{
   text-align: left;
   display: block;
   line-height: 40rpx;
+  color: #fff;
+}
+.select-btn{
+  background-color: #db1277;
+  color: #fff;
+  width: 600rpx;
 }

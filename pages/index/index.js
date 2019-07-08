@@ -51,8 +51,9 @@ Page({
     }
     var self=this;
     wx.chooseImage({
-      sizeType: ['compressed'],
+      // sizeType: ['compressed'],
       success: res => {
+        console.log(res)
         wx.showLoading({title: '分析照片中'})
         var path = res.tempFilePaths[0];
         app.savePhoto(path,function(fileID){
@@ -60,6 +61,9 @@ Page({
           self.setData({ src: 'data:image/png;base64,' + data });
           self.recognize(data, res.fileID);
         });
+      },
+      fail:error=>{
+        console.log(error)
       }
     })
   },
@@ -83,9 +87,9 @@ Page({
           result.beauty=parseInt(result.beauty);
           if(result.beauty>=80){result.beauty=79}
           self.setData({ face: result })
-          app.globalData.db.collection('photos').add({
+          app.globalData.db.collection('faces').add({
             data: {
-              nickname: app.globalData.userInfo.nickname,
+              nickName: app.globalData.userInfo.nickName,
               beauty: result.beauty,
               fileID: fileID,
               result: result,
@@ -107,7 +111,7 @@ Page({
         wx.hideLoading();
         wx.showToast({
           title: '照片识别失败',
-          icon: 'fail',
+          icon: 'none',
           duration: 2000
         })
       }

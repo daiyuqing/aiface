@@ -1,6 +1,6 @@
 .photos{
   display: flex;
-  margin: 50rpx 0;
+  margin: 20rpx 0;
 }
 .photos image{
   width: 375rpx;
@@ -12,4 +12,9 @@
 .result progress{
   margin: 20rpx auto;
   width: 400rpx;
+}
+.select-btn{
+  background-color: #db1277;
+  color: #fff;
+  width: 600rpx;
 }

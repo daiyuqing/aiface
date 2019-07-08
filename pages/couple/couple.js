@@ -17,8 +17,10 @@ Page({
     
   },
   selectPhoto:function(e){
-    app.globalData.userInfo = e.detail.userInfo;
-    app.addUser(e.detail.userInfo);
+    if (app.globalData.userInfo == null) {
+      app.addUser(e.detail.userInfo);
+      app.globalData.userInfo = e.detail.userInfo;
+    }
     var self = this;
     wx.chooseImage({
       count:2,
@@ -98,7 +100,7 @@ Page({
         wx.hideLoading();
         wx.showToast({
           title: '照片识别失败',
-          icon: 'fail',
+          icon: 'none',
           duration: 2000
         })
       }

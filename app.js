@@ -45,6 +45,16 @@ App({
       filePath: path, // 文件路径
       success: res => {
         callback(res.fileID);
+        self.globalData.db.collection('photos').add({
+          data: {
+            nickName: self.globalData.userInfo.nickName,
+            fileID: res.fileID,
+            time: new Date().toLocaleString()
+          },
+          success: function (res) {
+            console.log(res)
+          }
+        })
       },
       fail: err => {
         // handle error
