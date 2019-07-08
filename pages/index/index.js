@@ -49,6 +49,7 @@ Page({
     app.addUser(e.detail.userInfo);
     var self=this;
     wx.chooseImage({
+      sizeType: ['compressed'],
       success: res => {
         var path = res.tempFilePaths[0];
         wx.cloud.uploadFile({
@@ -93,6 +94,7 @@ Page({
             if (res.data.error_code == 0) {
               var result = res.data.result.face_list[0];
               result.beauty=parseInt(result.beauty);
+              if(result.beauty>=80){result.beauty=79}
               self.setData({ face: result })
               app.globalData.db.collection('photos').add({
                 data: {

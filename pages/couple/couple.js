@@ -22,6 +22,7 @@ Page({
     var self = this;
     wx.chooseImage({
       count:2,
+      sizeType: [ 'compressed'],
       success: res => {
         if (res.tempFilePaths.length<2){
           wx.showModal({
@@ -111,6 +112,7 @@ Page({
         if (res.data.error_code == 0) {
           var score = res.data.result.score;
           score = parseInt(score*3);
+          if(score>=100){score=99;}
           self.setData({score:score})
           app.globalData.db.collection('couples').add({
             data: {
@@ -141,38 +143,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    wx.request({
-      method: 'POST',
-      url: 'https://aip.baidubce.com/rest/2.0/face/v3/match?access_token=24.786bd0ac15d45fb2b13c3977f3aac0a2.2592000.1564899556.282335-16719910', //仅为示例，并非真实的接口地址
-      data: [
-        {
-          "image": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562515592956&di=c8692933b174ec007ebacbbd96dc695a&imgtype=0&src=http%3A%2F%2Fimage13.m1905.cn%2Fuploadfile%2F2014%2F1223%2F20141223050349732.jpg",
-          "image_type": "URL"
-        },
-        {
-          "image": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562515622857&di=eeea45b9297157b464717d99e85f3a51&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201503%2F21%2F20150321152452_EcLZZ.jpeg",
-          "image_type": "URL",
-        }
-      ],
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        console.log(res)
-        if (res.data.error_code == 0) {
-          console.log(res)
-        } else {
-          wx.showModal({
-            title: '照片识别失败',
-            content: res.data.error_msg,
-            showCancel: false,
-            success(res) {
-
-            }
-          })
-        }
-      }
-    })
+    
   },
 
   /**
