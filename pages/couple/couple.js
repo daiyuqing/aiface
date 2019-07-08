@@ -26,74 +26,34 @@ Page({
       success: res => {
         if (res.tempFilePaths.length<2){
           wx.showModal({
-            title: '测试失败',
+            title: '评分失败',
             content: '请上传两张照片',
-            showCancel: false,
-            success(res) {
-
-            }
+            showCancel: false
           })
           return;
         }
+        wx.showLoading({title: '分析照片中'});
         var path1 = res.tempFilePaths[0];
         var path2 = res.tempFilePaths[1];
-        var fileID1='';
-        var fileID2 = '';
-        var base64_1='';
-        var base64_2 = '';
-        wx.cloud.uploadFile({
-          cloudPath: 'photo/' + e.detail.userInfo.nickName + '/' + new Date().getTime() + '.png',
-          filePath: path1, // 文件路径
-          success: res => {
-            fileID1 = res.fileID;
-            wx.getFileSystemManager().readFile({
-              filePath: path1, //选择图片返回的相对路径
-              encoding: 'base64', //编码格式
-              success: res => { //成功的回调
-                base64_1=res.data;
-                self.setData({ src1: 'data:image/png;base64,' + res.data})
-                if (base64_2!=''){
-                  self.recognize(path1, path2, fileID1, fileID2, base64_1, base64_2)
-                }
-              }
+        app.savePhoto(path1,function(fileID1){
+          app.savePhoto(path2,function(fileID2){
+            var data1=wx.getFileSystemManager().readFileSync(path1,'base64');
+            var data2=wx.getFileSystemManager().readFileSync(path2,'base64');
+            self.setData({ 
+              src1: 'data:image/png;base64,' + data1,
+              src2: 'data:image/png;base64,' + data2 
             });
-          },
-          fail: err => {
-            wx.hideLoading()
-          }
-        })
-        wx.cloud.uploadFile({
-          cloudPath: 'photo/' + e.detail.userInfo.nickName + '/' + new Date().getTime() + '.png',
-          filePath: path2, // 文件路径
-          success: res => {
-            fileID2 = res.fileID;
-            wx.getFileSystemManager().readFile({
-              filePath: path2, //选择图片返回的相对路径
-              encoding: 'base64', //编码格式
-              success: res => { //成功的回调
-                base64_2 = res.data;
-                self.setData({ src2: 'data:image/png;base64,' + res.data })
-                if (base64_1 != '') {
-                  self.recognize(path1, path2, fileID1, fileID2, base64_1, base64_2)
-                }
-              }
-            });
-          },
-          fail: err => {
-            wx.hideLoading()
-          }
-        })
-        wx.showLoading({
-          title: '分析照片中',
-        })
+            self.recognize(fileID1, fileID2, data1, data2);
+          });
+        });
       }
     });
   },
-  recognize: function (path1, path2, fileID1, fileID2, base64_1, base64_2){
+  recognize: function ( fileID1, fileID2, base64_1, base64_2){
     var self=this;
     wx.request({
       method: 'POST',
-      url: 'https://aip.baidubce.com/rest/2.0/face/v3/match?access_token=24.786bd0ac15d45fb2b13c3977f3aac0a2.2592000.1564899556.282335-16719910', //仅为示例，并非真实的接口地址
+      url: 'https://aip.baidubce.com/rest/2.0/face/v3/match?access_token='+app.globalData.access_token, //仅为示例，并非真实的接口地址
       data: [
         {
           "image": base64_1,
@@ -116,7 +76,7 @@ Page({
           self.setData({score:score})
           app.globalData.db.collection('couples').add({
             data: {
-              userInfo: app.globalData.userInfo,
+              nickname: app.globalData.userInfo.nickname,
               fileID1: fileID1,
               fileID2: fileID2,
               score: score,
@@ -130,12 +90,17 @@ Page({
           wx.showModal({
             title: '照片识别失败',
             content: res.data.error_msg,
-            showCancel: false,
-            success(res) {
-
-            }
+            showCancel: false
           })
         }
+      },
+      fail(error){
+        wx.hideLoading();
+        wx.showToast({
+          title: '照片识别失败',
+          icon: 'fail',
+          duration: 2000
+        })
       }
     })
   },

@@ -37,6 +37,21 @@ App({
       }
     })
   },
+  //把照片存到服务器
+  savePhoto:function(path,callback){
+    var self=this;
+    wx.cloud.uploadFile({
+      cloudPath: 'photo/' + self.globalData.userInfo.nickName +'/'+ new Date().getTime()+'.png',
+      filePath: path, // 文件路径
+      success: res => {
+        callback(res.fileID);
+      },
+      fail: err => {
+        // handle error
+      }
+    })
+  },
+  //添加用户到数据库中
   addUser: function (userInfo){
     var self=this;
     self.globalData.db.collection('users').where({
@@ -66,6 +81,7 @@ App({
     })
   },
   globalData: {
+    access_token:"24.786bd0ac15d45fb2b13c3977f3aac0a2.2592000.1564899556.282335-16719910",
     userInfo: null,
     openid:''
   }

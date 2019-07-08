@@ -23,9 +23,9 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#1296db",
+    "navigationBarTitleText": "识图测颜值",
+    "navigationBarTextStyle": "white"
   },
   "cloud":true,
   "sitemapLocation": "sitemap.json"

@@ -45,79 +45,70 @@ Page({
   },
   //事件处理函数
   selectPhoto: function(e) {
-    app.globalData.userInfo=e.detail.userInfo;
-    app.addUser(e.detail.userInfo);
+    if (app.globalData.userInfo==null) {
+      app.addUser(e.detail.userInfo);
+      app.globalData.userInfo=e.detail.userInfo;
+    }
     var self=this;
     wx.chooseImage({
       sizeType: ['compressed'],
       success: res => {
+        wx.showLoading({title: '分析照片中'})
         var path = res.tempFilePaths[0];
-        wx.cloud.uploadFile({
-          cloudPath: 'photo/' + e.detail.userInfo.nickName +'/'+ new Date().getTime()+'.png',
-          filePath: path, // 文件路径
-          success: res => {
-            self.recognize(path, res.fileID)
-          },
-          fail: err => {
-            // handle error
-          }
-        })
-        wx.showLoading({
-          title: '分析照片中',
-        })
-       
+        app.savePhoto(path,function(fileID){
+          var data=wx.getFileSystemManager().readFileSync(path,'base64');
+          self.setData({ src: 'data:image/png;base64,' + data });
+          self.recognize(data, res.fileID);
+        });
       }
     })
   },
-  recognize:function(path,url){
+  recognize:function(data,fileID){
     var self = this;
-    wx.getFileSystemManager().readFile({
-      filePath: path, //选择图片返回的相对路径
-      encoding: 'base64', //编码格式
-      success: res => { //成功的回调
-        // console.log('data:image/png;base64,' + res.data)
-        self.setData({ src: 'data:image/png;base64,' + res.data })
-        wx.request({
-          method: 'POST',
-          url: 'https://aip.baidubce.com/rest/2.0/face/v3/detect', //仅为示例，并非真实的接口地址
-          data: {
-            "access_token": "24.786bd0ac15d45fb2b13c3977f3aac0a2.2592000.1564899556.282335-16719910",
-            "image_type": "BASE64",
-            'image': res.data,
-            "face_field": "age,beauty,expression,face_shape,gender,glasses,race,quality,eye_status,emotion,face_type"
-          },
-          header: {
-            'content-type': 'application/x-www-form-urlencoded' // 默认值
-          },
-          success(res) {
-            wx.hideLoading()
-            if (res.data.error_code == 0) {
-              var result = res.data.result.face_list[0];
-              result.beauty=parseInt(result.beauty);
-              if(result.beauty>=80){result.beauty=79}
-              self.setData({ face: result })
-              app.globalData.db.collection('photos').add({
-                data: {
-                  userInfo: app.globalData.userInfo,
-                  photo: url,
-                  result: result,
-                  time: new Date().toLocaleString()
-                },
-                success: function (res) {
-                  console.log(res)
-                }
-              })
-            } else {
-              wx.showModal({
-                title: '照片识别失败',
-                content: res.data.error_msg,
-                showCancel: false,
-                success(res) {
-
-                }
-              })
+    wx.request({
+      method: 'POST',
+      url: 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token='+app.globalData.access_token, //仅为示例，并非真实的接口地址
+      data: {
+        "image_type": "BASE64",
+        'image': data,
+        "face_field": "age,beauty,expression,face_shape,gender,glasses,race,quality,eye_status,emotion,face_type"
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        wx.hideLoading()
+        if (res.data.error_code == 0) {
+          var result = res.data.result.face_list[0];
+          result.beauty=parseInt(result.beauty);
+          if(result.beauty>=80){result.beauty=79}
+          self.setData({ face: result })
+          app.globalData.db.collection('photos').add({
+            data: {
+              nickname: app.globalData.userInfo.nickname,
+              beauty: result.beauty,
+              fileID: fileID,
+              result: result,
+              time: new Date().toLocaleString()
+            },
+            success: function (res) {
+              console.log(res)
             }
-          }
+          })
+        } else {
+          wx.showModal({
+            title: '照片识别失败',
+            content: res.data.error_msg,
+            showCancel: false
+          })
+        }
+      },
+      fail(error){
+        wx.hideLoading();
+        wx.showToast({
+          title: '照片识别失败',
+          icon: 'fail',
+          duration: 2000
         })
       }
     })
