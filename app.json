@@ -1,22 +1,23 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/couple/couple"
+    "pages/couple/couple",
+    "pages/rank/rank"
   ],
   "tabBar": {
     "color": "#515151",
-    "selectedColor":"#1296db",
+    "selectedColor": "#1296db",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath":"images/face.png",
+        "iconPath": "images/face.png",
         "selectedIconPath": "images/face_selected.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/couple/couple",
         "iconPath": "images/couple.png",
-        "selectedIconPath":"images/couple_selected.png",
+        "selectedIconPath": "images/couple_selected.png",
         "text": "夫妻相"
       }
     ]
@@ -27,6 +28,6 @@
     "navigationBarTitleText": "识图测颜值",
     "navigationBarTextStyle": "white"
   },
-  "cloud":true,
+  "cloud": true,
   "sitemapLocation": "sitemap.json"
 }

@@ -59,7 +59,7 @@ Page({
         app.savePhoto(path,function(fileID){
           var data=wx.getFileSystemManager().readFileSync(path,'base64');
           self.setData({ src: 'data:image/png;base64,' + data });
-          self.recognize(data, res.fileID);
+          self.recognize(data, fileID);
         });
       },
       fail:error=>{
