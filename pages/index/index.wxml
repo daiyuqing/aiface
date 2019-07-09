@@ -10,7 +10,7 @@
     <text class="user-motto">表情：{{expression[face.expression.type]}}</text>
     <text class="user-motto">是否戴眼镜：{{glasses[face.glasses.type]}}</text>
     <text class="user-motto">人种：{{race[face.race.type]}}</text>
-    <text class="user-motto" style='color:rgb(245, 12, 51);font-weight:bold;'>颜值评分：{{face.beauty+20}}</text>
+    <text class="user-motto" style='color:rgb(245, 12, 51);font-weight:bold;'>颜值评分：{{face.beauty+10}}</text>
   </view>
   <button class='select-btn'  open-type="getUserInfo" bindgetuserinfo="selectPhoto">选择美照</button>
 </view>

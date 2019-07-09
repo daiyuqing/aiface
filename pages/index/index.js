@@ -85,7 +85,7 @@ Page({
         if (res.data.error_code == 0) {
           var result = res.data.result.face_list[0];
           result.beauty=parseInt(result.beauty);
-          if(result.beauty>=80){result.beauty=79}
+          if(result.beauty>=90){result.beauty=89}
           self.setData({ face: result })
           app.globalData.db.collection('faces').add({
             data: {
