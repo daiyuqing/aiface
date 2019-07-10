@@ -118,6 +118,8 @@ Page({
     })
   },
   onLoad: function () {
-    
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
 })

@@ -2,15 +2,15 @@
 <view class="container">
   <image  src="{{src}}" mode="aspectFit" class='upload-img'></image>
   <view class='result'>
-    <text class="user-motto" style='font-size:40rpx;text-align:center;height:60rpx;'>测试结果</text>
+    <text class="user-motto" style='font-size:40rpx;text-align:center;height:60rpx;'>颜值测试结果</text>
     <text class="user-motto">年龄：{{face.age}}</text>
     <text class="user-motto">性别：{{face.gender.type=='male'?'男':'女'}}</text>
     <text class="user-motto">情绪：{{emotion[face.emotion.type]}}</text>
     <text class="user-motto">脸型：{{face_shape[face.face_shape.type]}}</text>
     <text class="user-motto">表情：{{expression[face.expression.type]}}</text>
-    <text class="user-motto">是否戴眼镜：{{glasses[face.glasses.type]}}</text>
+    <text class="user-motto">眼镜：{{glasses[face.glasses.type]}}</text>
     <text class="user-motto">人种：{{race[face.race.type]}}</text>
-    <text class="user-motto" style='color:rgb(245, 12, 51);font-weight:bold;'>颜值评分：{{face.beauty+10}}</text>
+    <text class="user-motto" style='color:yellow;font-weight:bold;'>评分：{{face.beauty+10}}</text>
   </view>
   <button class='select-btn'  open-type="getUserInfo" bindgetuserinfo="selectPhoto">选择美照</button>
 </view>

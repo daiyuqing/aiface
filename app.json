@@ -19,6 +19,12 @@
         "iconPath": "images/couple.png",
         "selectedIconPath": "images/couple_selected.png",
         "text": "夫妻相"
+      },
+      {
+        "pagePath": "pages/rank/rank",
+        "iconPath": "images/rank.png",
+        "selectedIconPath": "images/rank_selected.png",
+        "text": "排行榜"
       }
     ]
   },

@@ -1,1 +1,17 @@
 /* pages/page/rank.wxss */
+.rank-item{
+  display: flex;
+  height: 80rpx;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20rpx;
+  border-bottom: 1rpx solid #ccc;
+}
+.rank-item .rank,.score{
+  width: 150rpx;
+  text-align: center;
+}
+.rank-item .name{
+  width: 400rpx;
+  text-align: center;
+}

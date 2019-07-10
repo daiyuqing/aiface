@@ -36,6 +36,9 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   },
   //把照片存到服务器
   savePhoto:function(path,callback){
