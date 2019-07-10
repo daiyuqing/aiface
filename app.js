@@ -74,7 +74,8 @@ App({
         if(res.data.length==0){
           self.globalData.db.collection('users').add({
             data: {
-              userInfo: userInfo
+              userInfo: userInfo,
+              create_time: self.globalData.db.serverDate()
             },
             success: function (res) {
               console.log(res)
@@ -83,7 +84,8 @@ App({
         }else{
           self.globalData.db.collection('users').doc(res.data[0]._id).update({
             data: {
-              userInfo: userInfo
+              userInfo: userInfo,
+              update_time: self.globalData.db.serverDate()
             },
             success: function (res) {
               console.log(res)

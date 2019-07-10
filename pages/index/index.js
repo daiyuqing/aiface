@@ -89,6 +89,7 @@ Page({
           self.setData({ face: result })
           app.globalData.db.collection('faces').add({
             data: {
+              userInfo: app.globalData.userInfo,
               nickName: app.globalData.userInfo.nickName,
               beauty: result.beauty,
               fileID: fileID,

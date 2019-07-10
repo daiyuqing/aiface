@@ -78,6 +78,7 @@ Page({
           self.setData({score:score})
           app.globalData.db.collection('couples').add({
             data: {
+              userInfo: app.globalData.userInfo,
               nickname: app.globalData.userInfo.nickName,
               fileID1: fileID1,
               fileID2: fileID2,
