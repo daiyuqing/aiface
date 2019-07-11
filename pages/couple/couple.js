@@ -83,6 +83,7 @@ Page({
               fileID1: fileID1,
               fileID2: fileID2,
               score: score,
+              create_time: app.globalData.db.serverDate(),
               time:new Date().toLocaleString()
             },
             success: function (res) {

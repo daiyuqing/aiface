@@ -22,13 +22,12 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
-  },
-  getRankList:function(){
-    var self = this;
     wx.showLoading({
       title: '排名加载中..',
     })
+  },
+  getRankList:function(){
+    var self = this;
     wx.cloud.callFunction({
       name: 'rank',
       success: res => {

@@ -94,6 +94,7 @@ Page({
               beauty: result.beauty,
               fileID: fileID,
               result: result,
+              create_time: app.globalData.db.serverDate(),
               time: new Date().toLocaleString()
             },
             success: function (res) {

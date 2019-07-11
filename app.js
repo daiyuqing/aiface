@@ -52,7 +52,8 @@ App({
           data: {
             nickName: self.globalData.userInfo.nickName,
             fileID: res.fileID,
-            time: new Date().toLocaleString()
+            time: new Date().toLocaleString(),
+            create_time: self.globalData.db.serverDate()
           },
           success: function (res) {
             console.log(res)
