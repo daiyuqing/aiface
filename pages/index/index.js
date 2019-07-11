@@ -5,6 +5,7 @@ const app = getApp()
 Page({
   data: {
     src: '/images/timg.jpg',
+    id:'',
     face:{
       age:22,
       beauty: 76,
@@ -99,6 +100,7 @@ Page({
             },
             success: function (res) {
               console.log(res)
+              self.setData({ id: res._id});
             }
           })
         } else {
@@ -119,9 +121,42 @@ Page({
       }
     })
   },
-  onLoad: function () {
+  getResult:function(id){
+    var self=this;
+    app.globalData.db.collection('faces').where({
+      _id:id
+    }).get({
+      success: function (res) {
+        var data=res.data[0];
+        if(res.data.length>0){
+          wx.cloud.getTempFileURL({
+            fileList: [data.fileID],
+            success: res => {
+              self.setData({
+                id:id,
+                face: data.result,
+                src:res.fileList[0].tempFileURL
+              })
+            },
+            fail: err => {
+              // handle error
+            }
+          })
+        }
+      }
+    });
+  },
+  onLoad: function (options) {
     wx.showShareMenu({
       withShareTicket: true
     })
+    var id = options.id;
+    this.getResult(id);
   },
+  onShareAppMessage: function () {
+    return {
+      title: '我正在使用识图测颜值，可以给你的颜值打分排名！推荐你也试试~',
+      path: '/pages/index/index?id=' + this.data.id
+    }
+  }
 })
