@@ -1,0 +1,19 @@
+<view class="title">颜值测试记录</view>
+<view wx:if="{{data.length==0}}">
+  <view class="info">您还未测试过颜值！</view>
+</view>
+<view wx:else>
+  <view  class='rank-item'>
+    <text class='rank'>序号</text>
+    <text class='name'>上传时间</text>
+    <text class='score'>颜值评分</text>
+  </view>
+  <view wx:for="{{data}}" wx:if="{{item.fileID}}" class='rank-item' wx:key="{{index}}" bindtap='showPhoto' data-file-id="{{item.fileID}}">
+    <text class='rank'>{{index+1}}</text>
+    <text class='name'>{{item.time}}</text>
+    <text class='score'>{{item.beauty+10}}</text>
+  </view>
+</view>
+
+
+

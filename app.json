@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/couple/couple",
-    "pages/rank/rank"
+    "pages/rank/rank",
+    "pages/user/user"
   ],
   "tabBar": {
     "color": "#515151",
@@ -25,6 +26,12 @@
         "iconPath": "images/rank.png",
         "selectedIconPath": "images/rank_selected.png",
         "text": "排行榜"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user_selected.png",
+        "text": "我的"
       }
     ]
   },

@@ -88,36 +88,62 @@ Page({
           result.beauty=parseInt(result.beauty);
           if(result.beauty>=90){result.beauty=89}
           self.setData({ face: result })
-          app.globalData.db.collection('faces').add({
-            data: {
-              userInfo: app.globalData.userInfo,
-              nickName: app.globalData.userInfo.nickName,
-              beauty: result.beauty,
-              fileID: fileID,
-              result: result,
-              create_time: app.globalData.db.serverDate(),
-              time: new Date().toLocaleString()
-            },
-            success: function (res) {
-              console.log(res)
-              self.setData({ id: res._id});
+          wx.showModal({
+            title: '照片识别成功',
+            content: '您的照片颜值打分' +( result.beauty+10)+',您是否愿意本张照片被其他用户看到？',
+            confirmText:'愿意',
+            cancelText:'不愿意',
+            success(res) {
+              if (res.confirm) {
+                self.saveResult(fileID, result.beauty, result,1);
+              } else if (res.cancel) {
+                self.saveResult(fileID, result.beauty, result, 0);
+              }
             }
           })
-        } else {
+        } else if (res.data.error_code == 222202){
+          wx.showModal({
+            title: '照片识别失败',
+            content: '照片中无人脸',
+            showCancel: false,
+            duration: 2000
+          })
+        } else{
           wx.showModal({
             title: '照片识别失败',
             content: res.data.error_msg,
-            showCancel: false
+            showCancel: false,
+            duration: 2000
           })
         }
       },
       fail(error){
+        console.log(error)
         wx.hideLoading();
         wx.showToast({
           title: '照片识别失败',
           icon: 'none',
           duration: 2000
         })
+      }
+    })
+  },
+  saveResult: function (fileID, beauty, result,isPublic){
+    var self=this;
+    app.globalData.db.collection('faces').add({
+      data: {
+        userInfo: app.globalData.userInfo,
+        nickName: app.globalData.userInfo.nickName,
+        beauty: beauty,
+        fileID: fileID,
+        result: result,
+        create_time: app.globalData.db.serverDate(),
+        isPublic:isPublic,
+        time: new Date().toLocaleString()
+      },
+      success: function (res) {
+        console.log(res)
+        self.setData({ id: res._id });
       }
     })
   },
@@ -151,7 +177,9 @@ Page({
       withShareTicket: true
     })
     var id = options.id;
-    this.getResult(id);
+    if(id){
+      this.getResult(id);
+    }
   },
   onShareAppMessage: function () {
     return {

@@ -16,3 +16,13 @@
   width: 400rpx;
   text-align: center;
 }
+.title{
+  text-align: center;
+  font-size: 40rpx;
+  height: 50rpx;
+  margin: 20rpx 0;
+}
+.info{
+  font-size: 24rpx;
+  text-align: center;
+}
