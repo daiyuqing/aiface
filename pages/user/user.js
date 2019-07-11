@@ -49,7 +49,14 @@ Page({
     }).get({
       success: function (res) {
         console.log(res)
-        self.setData({ data: res.data });
+        var data = []
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].fileID && res.data[i].create_time) {
+            res.data[i].time=new Date(res.data[i].create_time).toLocaleString()
+            data.push(res.data[i]);
+          }
+        }
+        self.setData({ data: data });
       }
     })
   },
