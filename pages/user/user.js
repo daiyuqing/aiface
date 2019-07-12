@@ -1,3 +1,4 @@
+var util=require('../../utils/util.js');
 const app = getApp()
 Page({
 
@@ -12,7 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
   showPhoto: function (e) {
     var fileID = e.currentTarget.dataset.fileId;
@@ -52,7 +53,7 @@ Page({
         var data = []
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].fileID && res.data[i].create_time) {
-            res.data[i].time=new Date(res.data[i].create_time).toLocaleString()
+            res.data[i].time = util.formatTime(res.data[i].create_time);
             data.push(res.data[i]);
           }
         }
