@@ -92,12 +92,12 @@
 .share{
   position: fixed;
   top: 30rpx;
-  right: -20rpx;
-  width: 120rpx;
-  height: 40rpx;
+  right: -30rpx;
+  width: 160rpx;
+  height: 60rpx;
   background: #1296db;
-  border-radius: 20rpx;
-  font-size: 20rpx;
+  border-radius: 30rpx;
+  font-size: 30rpx;
   color: #fff;
-  line-height: 40rpx;
+  line-height: 60rpx;
 }
