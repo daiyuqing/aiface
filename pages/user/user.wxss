@@ -1,7 +1,7 @@
 /* pages/page/rank.wxss */
 .rank-item{
   display: flex;
-  height: 80rpx;
+  height: 100rpx;
   justify-content: space-between;
   align-items: center;
   padding: 0 20rpx;
@@ -9,12 +9,20 @@
   font-size: 30rpx;
 }
 .rank-item .rank,.score{
-  width: 150rpx;
+  width: 100rpx;
   text-align: center;
 }
 .rank-item .name{
   width: 400rpx;
   text-align: center;
+}
+.rank-item .img{
+  width: 100rpx;
+  text-align: center;
+}
+.rank-item .img image{
+  width: 60rpx;
+  height: 60rpx;
 }
 .title{
   text-align: center;

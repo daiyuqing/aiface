@@ -8,7 +8,7 @@ Page({
     id:'',
     face:{
       age:22,
-      beauty: 76,
+      beauty: 86,
       gender: { type: "female"},
       emotion: { type: "neutral" },
       expression: { type: "none"},
@@ -59,7 +59,6 @@ Page({
         var path = res.tempFilePaths[0];
         app.savePhoto(path,function(fileID){
           var data=wx.getFileSystemManager().readFileSync(path,'base64');
-          self.setData({ src: 'data:image/png;base64,' + data });
           self.recognize(data, fileID);
         });
       },
@@ -85,22 +84,25 @@ Page({
         wx.hideLoading()
         if (res.data.error_code == 0) {
           var result = res.data.result.face_list[0];
-          result.beauty=parseInt(result.beauty);
-          if(result.beauty>=90){result.beauty=89}
-          self.setData({ face: result })
-          wx.showModal({
-            title: '照片识别成功',
-            content: '您的照片颜值打分' +( result.beauty+10)+',您是否愿意本张照片被其他用户看到？',
-            confirmText:'愿意',
-            cancelText:'不愿意',
-            success(res) {
-              if (res.confirm) {
-                self.saveResult(fileID, result.beauty, result,1);
-              } else if (res.cancel) {
-                self.saveResult(fileID, result.beauty, result, 0);
+          result.beauty = parseInt(result.beauty);
+          if (result.beauty >= 90) { result.beauty = 89 }
+          var face_token = res.data.result.face_list[0].face_token;
+          app.searchFace(face_token,function(){
+            self.setData({ face: result, src: 'data:image/png;base64,' + data  })
+            wx.showModal({
+              title: '照片识别成功',
+              content: '您的照片颜值打分' + (result.beauty + 10) + ',您是否愿意本张照片被其他用户看到？',
+              confirmText: '愿意',
+              cancelText: '不愿意',
+              success(res) {
+                if (res.confirm) {
+                  self.saveResult(fileID, result.beauty, result, 1, face_token);
+                } else if (res.cancel) {
+                  self.saveResult(fileID, result.beauty, result, 0, face_token);
+                }
               }
-            }
-          })
+            })
+          });
         } else if (res.data.error_code == 222202){
           wx.showModal({
             title: '照片识别失败',
@@ -128,7 +130,7 @@ Page({
       }
     })
   },
-  saveResult: function (fileID, beauty, result,isPublic){
+  saveResult: function (fileID, beauty, result, isPublic, face_token){
     var self=this;
     app.globalData.db.collection('faces').add({
       data: {
@@ -139,11 +141,15 @@ Page({
         result: result,
         create_time: app.globalData.db.serverDate(),
         isPublic:isPublic,
+        face_token: face_token,
         time: new Date().toLocaleString()
       },
       success: function (res) {
         console.log(res)
         self.setData({ id: res._id });
+        if (beauty>80){
+          app.addFace(res._id, face_token)
+        }
       }
     })
   },
@@ -183,7 +189,7 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '我正在使用识图测颜值，可以给你的颜值打分排名！推荐你也试试~',
+      title: '我的颜值打分' + this.face_token.beauty+'，可以给你的颜值打分排名！推荐你也试试~',
       path: '/pages/index/index?id=' + this.data.id
     }
   }

@@ -1,10 +1,14 @@
 <view  class='rank-item'>
   <text class='rank'>排名</text>
   <text class='name'>微信昵称</text>
-  <text class='score'>颜值评分</text>
+  <text class='score'>评分</text>
+  <text class='img'>照片</text>
 </view>
-<view wx:for="{{rankList}}" class='rank-item' wx:key="{{index}}" bindtap='showPhoto' data-url="{{item.tempFileURL}}">
+<view wx:for="{{rankList}}" class='rank-item' wx:key="{{index}}" bindtap='showPhoto' data-url="{{item.tempFileURL}}" data-is-public="{{item.isPublic}}">
   <text class='rank'>{{index+1}}</text>
-  <text class='name'>{{item.nickName||'寻鹿'}}</text>
+  <text class='name'>{{item.nickName}}</text>
   <text class='score'>{{item.beauty+10}}</text>
+  <view  class='img'>
+    <image src="{{item.tempFileURL}}" mode="aspectFill"></image>
+  </view>
 </view>

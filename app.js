@@ -13,6 +13,7 @@ App({
       name: 'login',
       complete: res => {
         self.globalData.openid = res.result.openid;
+        self.globalData.access_token = res.result.access_token;
         // 获取用户信息
         wx.getSetting({
           success: res => {
@@ -93,6 +94,67 @@ App({
             }
           })
         }
+      }
+    })
+  },
+  //人脸搜索
+  searchFace: function (face_token,callback){
+    var self = this;
+    wx.request({
+      method: 'POST',
+      url: 'https://aip.baidubce.com/rest/2.0/face/v3/search?access_token=' + self.globalData.access_token,
+      data: {
+        "image_type": "FACE_TOKEN",
+        'image': face_token,
+        "group_id_list": "aiface"
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res)
+        var user_list = res.data.result.user_list
+        if (user_list && user_list.length > 0 && user_list[0].score > 80) {
+          wx.hideLoading()
+          wx.showModal({
+            title: '照片识别失败',
+            content: '好看的脸只能上传一次哦~',
+            showCancel: false,
+            success(res) {
+              wx.hideLoading()
+            }
+          })
+        } else {
+         callback();
+        }
+      },
+      fail(error) {
+
+      }
+    })
+  },
+  //人脸注册
+  addFace: function (photo_id,face_token,callback){
+    var self=this;
+    wx.request({
+      method: 'POST',
+      url: 'https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add?access_token=' + self.globalData.access_token,
+      data: {
+        "image_type": "FACE_TOKEN",
+        'image': face_token,
+        "group_id": "aiface",
+        "user_info": self.globalData.userInfo._openid,
+        "user_id": photo_id
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res)
+        callback();
+      },
+      fail(error) {
+
       }
     })
   },
