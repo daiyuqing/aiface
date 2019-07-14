@@ -189,7 +189,7 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '我的颜值打分' + this.face_token.beauty+'，可以给你的颜值打分排名！推荐你也试试~',
+      title: '我的颜值打分' + (this.data.face.beauty+10)+'分，你有我颜值高吗？',
       path: '/pages/index/index?id=' + this.data.id
     }
   }

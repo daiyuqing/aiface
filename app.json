@@ -13,7 +13,7 @@
         "pagePath": "pages/index/index",
         "iconPath": "images/face.png",
         "selectedIconPath": "images/face_selected.png",
-        "text": "首页"
+        "text": "颜值"
       },
       {
         "pagePath": "pages/couple/couple",

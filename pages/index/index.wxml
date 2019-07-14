@@ -1,7 +1,53 @@
 <!--index.wxml-->
 <view class="container">
   <image  src="{{src}}" mode="aspectFit" class='upload-img'></image>
-  <view class='result'>
+  <view class="test">
+    <view class="test-score">
+      <text class="item-title">颜值评分：</text>
+      <text class="item-value">{{face.beauty+10}}</text>
+    </view>
+    <view class="test-item">
+      <view>
+        <text class="item-title">年龄：</text>
+        <text class="item-value">{{face.age}}</text>
+      </view>
+      <view>
+        <text class="item-title">性别：</text>
+        <text class="item-value">{{face.gender.type=='male'?'男':'女'}}</text>
+      </view>
+    </view>
+    <view class="test-item">
+      <view>
+        <text class="item-title">情绪：</text>
+        <text class="item-value">{{emotion[face.emotion.type]}}</text>
+      </view>
+      <view>
+        <text class="item-title">脸型：</text>
+        <text class="item-value">{{face_shape[face.face_shape.type]}}</text>
+      </view>
+    </view>
+    <view class="test-item">
+      <view>
+        <text class="item-title">表情：</text>
+        <text class="item-value">{{expression[face.expression.type]}}</text>
+      </view>
+      <view>
+        <text class="item-title">眼镜：</text>
+        <text class="item-value">{{glasses[face.glasses.type]}}</text>
+      </view>
+    </view>
+    <view class="test-item">
+      <view>
+        <text class="item-title">人种：</text>
+        <text class="item-value">{{race[face.race.type]}}</text>
+      </view>
+      <view>
+        <text class="item-title"></text>
+        <text class="item-value"></text>
+      </view>
+    </view>
+  </view>
+  <!-- <view class='result'>
     <text class="user-motto" style='font-size:40rpx;text-align:center;height:60rpx;'>颜值测试结果</text>
     <text class="user-motto" style='color:yellow;font-weight:bold;'>评分：{{face.beauty+10}}</text>
     <text class="user-motto">年龄：{{face.age}}</text>
@@ -11,6 +57,9 @@
     <text class="user-motto">表情：{{expression[face.expression.type]}}</text>
     <text class="user-motto">眼镜：{{glasses[face.glasses.type]}}</text>
     <text class="user-motto">人种：{{race[face.race.type]}}</text>
-  </view>
+  </view> -->
   <button class='select-btn'  open-type="getUserInfo" bindgetuserinfo="selectPhoto">选择美照</button>
 </view>
+<button open-type="share" class="share">
+  分享
+</button>
