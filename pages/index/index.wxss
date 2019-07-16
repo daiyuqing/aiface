@@ -92,12 +92,29 @@
 .share{
   position: fixed;
   top: 30rpx;
-  right: -30rpx;
+  right: 0rpx;
   width: 160rpx;
   height: 60rpx;
   background: #1296db;
-  border-radius: 30rpx;
+  border-radius: 30rpx 0 0 30rpx;
   font-size: 30rpx;
   color: #fff;
   line-height: 60rpx;
+}
+.share image{
+  width: 25rpx;
+  height: 25rpx;
+}
+.san{
+  position: fixed;
+  right: 10rpx;
+  top: 100rpx;
+  width: 214rpx;
+  height: 60rpx;
+}
+.san_text{
+  position: fixed;
+  top: 120rpx;
+  right: 30rpx;
+  font-size: 24rpx;
 }

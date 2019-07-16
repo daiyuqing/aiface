@@ -121,6 +121,7 @@ Page({
     })
   },
   showPhoto:function(e){
+    e.currentTarget.dataset.isPublic =1
     if (e.currentTarget.dataset.isPublic==1){
       var url = e.currentTarget.dataset.url;
       wx.previewImage({

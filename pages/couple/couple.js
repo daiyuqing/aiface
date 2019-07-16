@@ -1,20 +1,41 @@
+import Canvas from '../../utils/canvas.js'
 const app = getApp()
 Page({
-
+  ...Canvas.options,
   /**
    * 页面的初始数据
    */
   data: {
     src1:'/images/dengchao.jpg',
     src2:'/images/sunli.jpg',
-    score:80
+    score:80,
+    ...Canvas.data,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.draw('runCanvas', this.data.score, 1000);
+  },
+  showProgress:function(score){
+    const ctx = wx.createCanvasContext('canvas')
+    ctx.arc(100, 100, 60, 0, 2 * Math.PI)
+    ctx.setFillStyle('#ccc')
+    ctx.fill()
+    ctx.draw()
+    ctx.arc(100, 100, 60, -0.5 * Math.PI, 1 * Math.PI)
+    ctx.setFillStyle('pink')
+    ctx.fill()
+    ctx.draw(true)
+    ctx.arc(100, 100, 30, 0, 2 * Math.PI)
+    ctx.setFillStyle('#fff')
+    ctx.fill()
+    ctx.draw(true)
+    ctx.setFontSize(20)
+    ctx.setFillStyle('pink')
+    ctx.fillText(score+'%', 80, 106)
+    ctx.draw(true)
   },
   selectPhoto:function(e){
     if (app.globalData.userInfo == null) {
@@ -76,6 +97,7 @@ Page({
           score = parseInt(score*3);
           if(score>=100){score=99;}
           self.setData({score:score})
+          self.draw('runCanvas', score, 1000);
           app.globalData.db.collection('couples').add({
             data: {
               userInfo: app.globalData.userInfo,
@@ -115,6 +137,7 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })
+    // this.showProgress(this.data.score)
   },
 
   /**
