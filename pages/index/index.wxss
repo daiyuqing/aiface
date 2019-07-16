@@ -118,3 +118,12 @@
   right: 30rpx;
   font-size: 24rpx;
 }
+.protocol{
+  font-size: 20rpx;
+  margin: 20rpx auto;
+  display: flex;
+}
+.protocol navigator{
+  text-decoration: underline;
+  color: red;
+}

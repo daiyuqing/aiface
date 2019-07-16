@@ -121,7 +121,8 @@ Page({
     })
   },
   showPhoto:function(e){
-    e.currentTarget.dataset.isPublic =1
+    this.setData({ url: e.currentTarget.dataset.url})
+    return
     if (e.currentTarget.dataset.isPublic==1){
       var url = e.currentTarget.dataset.url;
       wx.previewImage({
@@ -174,6 +175,20 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    var self=this;
+    return {
+      title: '测测你的颜值能不能上榜？',
+      path: '/pages/rank/rank',
+      success: function (res) {
+        console.log(res)
+        wx.previewImage({
+          current: '', // 当前显示图片的http链接
+          urls: [self.data.url] // 需要预览的图片http链接列表
+        })
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    }
   }
 })

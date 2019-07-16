@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/couple/couple",
     "pages/rank/rank",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/protocol/protocol"
   ],
   "tabBar": {
     "color": "#515151",

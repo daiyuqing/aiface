@@ -1,0 +1,9 @@
+/* pages/protocol/protocol.wxss */
+view{
+  margin: 30rpx;
+}
+view text{
+  font-size: 30rpx;
+  display: block;
+  margin: 10rpx;
+}

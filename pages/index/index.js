@@ -91,15 +91,10 @@ Page({
             self.setData({ face: result, src: 'data:image/png;base64,' + data  })
             wx.showModal({
               title: '照片识别成功',
-              content: '您的照片颜值打分' + (result.beauty + 10) + ',您是否愿意本张照片被其他用户看到？',
-              confirmText: '愿意',
-              cancelText: '不愿意',
+              content: '您的照片颜值打分' + (result.beauty + 10) + ',您可点击右上角分享按钮邀请好友一起测试',
+              showCancel: false,
               success(res) {
-                if (res.confirm) {
-                  self.saveResult(fileID, result.beauty, result, 1, face_token);
-                } else if (res.cancel) {
-                  self.saveResult(fileID, result.beauty, result, 0, face_token);
-                }
+                self.saveResult(fileID, result.beauty, result, 1, face_token);
               }
             })
           });
@@ -141,6 +136,7 @@ Page({
         result: result,
         create_time: app.globalData.db.serverDate(),
         isPublic:isPublic,
+        status:1,
         face_token: face_token,
         time: new Date().toLocaleString()
       },

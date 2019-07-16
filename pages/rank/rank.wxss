@@ -20,7 +20,13 @@
   width: 100rpx;
   text-align: center;
 }
-.rank-item .img image{
+.photo image{
   width: 60rpx;
   height: 60rpx;
+}
+.photo{
+  border: none;
+  width: 100rpx;
+  height: 60rpx;
+  background-color: #fff;
 }

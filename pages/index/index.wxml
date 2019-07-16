@@ -48,6 +48,10 @@
     </view>
   </view>
   <button class='select-btn'  open-type="getUserInfo" bindgetuserinfo="selectPhoto">选择美照</button>
+  <view class="protocol">
+   <text>使用颜值测试，即表示接受</text>
+   <navigator url="/pages/protocol/protocol">用户协议</navigator>
+  </view>
 </view>
 <button open-type="share" class="share">
   <image src="/images/i_shareicon.png"></image>
