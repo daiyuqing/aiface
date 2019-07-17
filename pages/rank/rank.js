@@ -121,7 +121,13 @@ Page({
     })
   },
   showPhoto:function(e){
-    this.setData({ url: e.currentTarget.dataset.url})
+    var url = e.currentTarget.dataset.url;
+    setTimeout(function(){
+      wx.previewImage({
+        current: '', // 当前显示图片的http链接
+        urls: [url] // 需要预览的图片http链接列表
+      })
+    },1000);
     return
     if (e.currentTarget.dataset.isPublic==1){
       var url = e.currentTarget.dataset.url;
@@ -179,21 +185,21 @@ Page({
     return {
       title: '测测你的颜值能不能上榜？',
       path: '/pages/rank/rank',
-      success: function (res) {
-        console.log(res)
-        wx.previewImage({
-          current: '', // 当前显示图片的http链接
-          urls: [self.data.url] // 需要预览的图片http链接列表
-        })
-      },
-      fail: function (res) {
-        wx.showModal({
-          title: '提示',
-          content: '分享后才能看照片哦',
-          showCancel:false
-        })
-        console.log(res)
-      }
+      // success: function (res) {
+      //   console.log(res)
+      //   wx.previewImage({
+      //     current: '', 
+      //     urls: [self.data.url] 
+      //   })
+      // },
+      // fail: function (res) {
+      //   wx.showModal({
+      //     title: '提示',
+      //     content: '分享后才能看照片哦',
+      //     showCancel:false
+      //   })
+      //   console.log(res)
+      // }
     }
   }
 })
