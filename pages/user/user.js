@@ -35,8 +35,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getRecord();
+  },
+  getRecord:function(){
     var self = this;
+    const _ = app.globalData.db.command;
     app.globalData.db.collection('faces').orderBy('create_time', 'desc').where({
+      status:_.neq(2),
       _openid: app.globalData.openid
     }).field({
       _openid: true,
@@ -44,13 +49,14 @@ Page({
       isPublic: true,
       nickName: true,
       fileID: true,
-      create_time:true,
+      create_time: true,
+      status:true,
       beauty: true
     }).get({
       success: function (res) {
         console.log(res)
         var data = []
-        var fileIDs=[];
+        var fileIDs = [];
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].fileID && res.data[i].create_time) {
             res.data[i].time = util.formatTime(res.data[i].create_time);
@@ -74,7 +80,27 @@ Page({
       }
     })
   },
-
+  // 删除图片记录
+  deleteRecord:function(e){
+    var self = this;
+    var id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '确定删除?',
+      content: '删除后将不会出现在排行榜中',
+      success:function(){
+        app.globalData.db.collection('faces').doc(id).update({
+          data: {
+            status: 2
+          },
+          success: function () {
+            self.getRecord();
+          },
+          fail: console.error
+        })
+      }
+    })
+    
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */

@@ -8,13 +8,17 @@
     <text class='name'>上传时间</text>
     <text class='score'>评分</text>
     <text class='img'>照片</text>
+    <text class='img'>删除</text>
   </view>
-  <view wx:for="{{data}}" wx:if="{{item.fileID}}" class='rank-item' wx:key="{{index}}" bindtap='showPhoto' data-file-id="{{item.fileID}}" data-url="{{item.tempFileURL}}">
+  <view wx:for="{{data}}" wx:if="{{item.fileID}}" class='rank-item' wx:key="{{index}}">
     <text class='rank'>{{index+1}}</text>
     <text class='name'>{{item.time}}</text>
     <text class='score'>{{item.beauty+10}}</text>
-    <view  class='img'>
+    <view  class='img'  bindtap='showPhoto' data-file-id="{{item.fileID}}" data-url="{{item.tempFileURL}}">
       <image src="{{item.tempFileURL}}" mode="aspectFill"></image>
+    </view>
+    <view  class='img'>
+      <image src="/images/delete.png" style="width:32rpx;height:32rpx;" mode="aspectFill" bindtap="deleteRecord" data-id="{{item._id}}"></image>
     </view>
   </view>
 </view>
