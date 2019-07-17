@@ -151,6 +151,9 @@ Page({
   },
   getResult:function(id){
     var self=this;
+    wx.showLoading({
+      title: '加载中',
+    })
     app.globalData.db.collection('faces').where({
       _id:id
     }).get({
@@ -160,6 +163,7 @@ Page({
           wx.cloud.getTempFileURL({
             fileList: [data.fileID],
             success: res => {
+              wx.hideLoading();
               self.setData({
                 id:id,
                 face: data.result,
@@ -167,7 +171,7 @@ Page({
               })
             },
             fail: err => {
-              // handle error
+              wx.hideLoading()
             }
           })
         }

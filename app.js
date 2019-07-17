@@ -120,16 +120,13 @@ App({
             title: '照片识别失败',
             content: '好看的脸只能上传一次哦~',
             showCancel: false,
-            success(res) {
-              wx.hideLoading()
-            }
           })
         } else {
          callback();
         }
       },
       fail(error) {
-
+        callback();
       }
     })
   },
