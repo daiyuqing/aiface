@@ -187,6 +187,11 @@ Page({
         })
       },
       fail: function (res) {
+        wx.showModal({
+          title: '提示',
+          content: '分享后才能看照片哦',
+          showCancel:false
+        })
         console.log(res)
       }
     }

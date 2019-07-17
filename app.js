@@ -134,7 +134,7 @@ App({
     })
   },
   //人脸注册
-  addFace: function (photo_id,face_token,callback){
+  addFace: function (photo_id,face_token){
     var self=this;
     wx.request({
       method: 'POST',
@@ -151,7 +151,6 @@ App({
       },
       success(res) {
         console.log(res)
-        callback();
       },
       fail(error) {
 
