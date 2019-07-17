@@ -21,8 +21,8 @@
   text-align: center;
 }
 .rank-item .img image{
-  width: 60rpx;
-  height: 60rpx;
+  width: 70rpx;
+  height: 70rpx;
 }
 .title{
   text-align: center;

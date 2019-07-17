@@ -46,6 +46,8 @@ Page({
   },
   //事件处理函数
   selectPhoto: function(e) {
+    console.log(e)
+    if(e.detail.userInfo==undefined){return}
     if (app.globalData.userInfo==null) {
       app.addUser(e.detail.userInfo);
       app.globalData.userInfo=e.detail.userInfo;
@@ -84,6 +86,15 @@ Page({
         wx.hideLoading()
         if (res.data.error_code == 0) {
           var result = res.data.result.face_list[0];
+          if (result.face_type.type =='cartoon'){
+            wx.showModal({
+              title: '照片识别失败',
+              content: '照片中无真实人脸',
+              showCancel: false,
+              duration: 2000
+            })
+            return;
+          }
           result.beauty = parseInt(result.beauty);
           if (result.beauty >= 90) { result.beauty = 89 }
           var face_token = res.data.result.face_list[0].face_token;
@@ -91,7 +102,7 @@ Page({
             self.setData({ face: result, src: 'data:image/png;base64,' + data  })
             wx.showModal({
               title: '照片识别成功',
-              content: '您的照片颜值打分' + (result.beauty + 10) + ',您可点击右上角分享按钮邀请好友一起测试',
+              content: '您的照片颜值打分' + (result.beauty + 10) + '分,您可点击右上角分享按钮邀请好友一起测试',
               showCancel: false,
               success(res) {
                 self.saveResult(fileID, result.beauty, result, 1, face_token);
@@ -143,7 +154,7 @@ Page({
       success: function (res) {
         console.log(res)
         self.setData({ id: res._id });
-        if (beauty>80){
+        if (beauty>85){
           app.addFace(res._id, face_token)
         }
       }

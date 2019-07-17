@@ -87,16 +87,29 @@ Page({
     wx.showModal({
       title: '确定删除?',
       content: '删除后将不会出现在排行榜中',
-      success:function(){
-        app.globalData.db.collection('faces').doc(id).update({
-          data: {
-            status: 2
-          },
-          success: function () {
-            self.getRecord();
-          },
-          fail: console.error
-        })
+      success:function(res){
+        if (res.confirm) {
+          app.globalData.db.collection('faces').doc(id).update({
+            data: {
+              status: 2
+            },
+            success: function () {
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                duration: 2000
+              })
+              self.getRecord();
+            },
+            fail: console.error
+          })
+        } else if (res.cancel) {
+          wx.showToast({
+            title: '删除失败',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       }
     })
     

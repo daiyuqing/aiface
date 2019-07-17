@@ -122,12 +122,6 @@ Page({
   },
   showPhoto:function(e){
     var url = e.currentTarget.dataset.url;
-    setTimeout(function(){
-      wx.previewImage({
-        current: '', // 当前显示图片的http链接
-        urls: [url] // 需要预览的图片http链接列表
-      })
-    },1000);
     return
     if (e.currentTarget.dataset.isPublic==1){
       var url = e.currentTarget.dataset.url;

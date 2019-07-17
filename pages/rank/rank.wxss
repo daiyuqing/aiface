@@ -21,12 +21,14 @@
   text-align: center;
 }
 .photo image{
-  width: 60rpx;
-  height: 60rpx;
+  width: 70rpx;
+  height: 70rpx;
 }
 .photo{
   border: none;
-  width: 100rpx;
-  height: 60rpx;
+  width: 70rpx;
+  height: 70rpx;
   background-color: #fff;
+  padding: 0;
+  border-radius: 0;
 }

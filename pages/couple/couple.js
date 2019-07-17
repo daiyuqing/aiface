@@ -18,26 +18,8 @@ Page({
   onLoad: function (options) {
     this.draw('runCanvas', this.data.score, 1000);
   },
-  showProgress:function(score){
-    const ctx = wx.createCanvasContext('canvas')
-    ctx.arc(100, 100, 60, 0, 2 * Math.PI)
-    ctx.setFillStyle('#ccc')
-    ctx.fill()
-    ctx.draw()
-    ctx.arc(100, 100, 60, -0.5 * Math.PI, 1 * Math.PI)
-    ctx.setFillStyle('pink')
-    ctx.fill()
-    ctx.draw(true)
-    ctx.arc(100, 100, 30, 0, 2 * Math.PI)
-    ctx.setFillStyle('#fff')
-    ctx.fill()
-    ctx.draw(true)
-    ctx.setFontSize(20)
-    ctx.setFillStyle('pink')
-    ctx.fillText(score+'%', 80, 106)
-    ctx.draw(true)
-  },
   selectPhoto:function(e){
+    if (e.detail.userInfo == undefined) { return }
     if (app.globalData.userInfo == null) {
       app.addUser(e.detail.userInfo);
       app.globalData.userInfo = e.detail.userInfo;
@@ -137,7 +119,6 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })
-    // this.showProgress(this.data.score)
   },
 
   /**
