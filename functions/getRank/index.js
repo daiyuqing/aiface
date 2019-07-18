@@ -3,9 +3,12 @@ const cloud = require('wx-server-sdk')
 
 cloud.init()
 const db = cloud.database()
+const _ = db.command;
 // 云函数入口函数
 exports.main = async (event, context) => {
-  var rank1 = await db.collection('faces').orderBy('beauty', 'desc').field({
+  var rank1 = await db.collection('faces').orderBy('beauty', 'desc').where({
+    status: _.neq(2)
+  }).field({
     _openid: true,
     _id: true,
     isPublic: true,
@@ -14,7 +17,9 @@ exports.main = async (event, context) => {
     face_token:true,
     beauty: true
   }).limit(100).get();
-  var rank2 = await db.collection('faces').orderBy('beauty', 'desc').skip(100).field({
+  var rank2 = await db.collection('faces').orderBy('beauty', 'desc').where({
+    status: _.neq(2)
+  }).skip(100).field({
     _openid: true,
     _id: true,
     isPublic: true,

@@ -130,6 +130,27 @@ App({
       }
     })
   },
+  // 人脸注册用户删除
+  deleteFace:function(photo_id){
+    var self = this;
+    wx.request({
+      method: 'POST',
+      url: 'https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/delete?access_token=' + self.globalData.access_token,
+      data: {
+        "group_id": "aiface",
+        "user_id": photo_id
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success(res) {
+        console.log(res)
+      },
+      fail(error) {
+
+      }
+    })
+  },
   //人脸注册
   addFace: function (photo_id,face_token){
     var self=this;

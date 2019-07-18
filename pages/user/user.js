@@ -39,27 +39,15 @@ Page({
   },
   getRecord:function(){
     var self = this;
-    const _ = app.globalData.db.command;
-    app.globalData.db.collection('faces').orderBy('create_time', 'desc').where({
-      status:_.neq(2),
-      _openid: app.globalData.openid
-    }).field({
-      _openid: true,
-      _id: true,
-      isPublic: true,
-      nickName: true,
-      fileID: true,
-      create_time: true,
-      status:true,
-      beauty: true
-    }).get({
-      success: function (res) {
-        console.log(res)
+    wx.cloud.callFunction({
+      name: 'getRecord',
+      success: res => {
+        res=res.result;
         var data = []
         var fileIDs = [];
         for (var i = 0; i < res.data.length; i++) {
           if (res.data[i].fileID && res.data[i].create_time) {
-            res.data[i].time = util.formatTime(res.data[i].create_time);
+            res.data[i].time = util.formatTime(new Date(res.data[i].create_time));
             data.push(res.data[i]);
             fileIDs.push(res.data[i].fileID)
           }
@@ -78,7 +66,7 @@ Page({
           }
         })
       }
-    })
+    });
   },
   // 删除图片记录
   deleteRecord:function(e){
@@ -100,6 +88,7 @@ Page({
                 duration: 2000
               })
               self.getRecord();
+              app.deleteFace(id);
             },
             fail: console.error
           })
