@@ -26,6 +26,23 @@ Page({
       title: '排名加载中..',
     })
   },
+  deletePhoto:function(e){
+    return;
+    var self = this;
+    var id = e.currentTarget.dataset.id;
+    wx.cloud.callFunction({
+      name:'deletePhoto',
+      data:{
+        id:id
+      },
+      success:function(){
+        wx.showToast({
+          title: '删除成功~',
+        })
+        self.getRankList()
+      }
+    })
+  },
   getRankList:function(){
     var self = this;
     wx.cloud.callFunction({
@@ -122,19 +139,12 @@ Page({
   },
   showPhoto:function(e){
     var url = e.currentTarget.dataset.url;
-    return
-    if (e.currentTarget.dataset.isPublic==1){
-      var url = e.currentTarget.dataset.url;
+    setTimeout(function(){
       wx.previewImage({
         current: '', // 当前显示图片的http链接
         urls: [url] // 需要预览的图片http链接列表
       })
-    }else{
-      wx.showToast({
-        icon: 'none',
-        title: '作者不允许查看哦~',
-      })
-    }
+    },1000);
   },
   /**
    * 生命周期函数--监听页面显示

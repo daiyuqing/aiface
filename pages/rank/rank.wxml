@@ -7,8 +7,8 @@
 <view wx:for="{{rankList}}" class='rank-item' wx:key="{{index}}">
   <text class='rank'>{{index+1}}</text>
   <text class='name'>{{item.nickName}}</text>
-  <text class='score'>{{item.beauty+10}}</text>
-  <button  class='photo' open-type ="share" bindtap='showPhoto' data-url="{{item.tempFileURL}}" data-is-public="{{item.isPublic}}">
+  <text class='score' bindtap='deletePhoto' data-id="{{item._id}}">{{item.beauty+10}}</text>
+  <button  class='photo' open-type="share"  bindtap='showPhoto' data-url="{{item.tempFileURL}}" data-is-public="{{item.isPublic}}">
    <image src="{{item.tempFileURL}}" mode="aspectFill"></image>
   </button>
 </view>

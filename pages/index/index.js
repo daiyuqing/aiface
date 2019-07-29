@@ -54,7 +54,7 @@ Page({
     }
     var self=this;
     wx.chooseImage({
-      // sizeType: ['compressed'],
+      sizeType: ['compressed'],
       success: res => {
         console.log(res)
         wx.showLoading({title: '分析照片中'})
