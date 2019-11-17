@@ -1,5 +1,6 @@
 // pages/page/rank.js
 const app = getApp()
+let rewardedVideoAd = null
 Page({
 
   /**
@@ -16,6 +17,20 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })
+    if (wx.createRewardedVideoAd) {
+      rewardedVideoAd = wx.createRewardedVideoAd({
+        adUnitId: 'adunit-9a61a0d2809ba3f9'
+      })
+      rewardedVideoAd.onLoad(() => {
+        console.log('onLoad event emit')
+      })
+      rewardedVideoAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      rewardedVideoAd.onClose((res) => {
+        console.log('onClose event emit', res)
+      })
+    }
   },
 
   /**
@@ -23,7 +38,7 @@ Page({
    */
   onReady: function () {
     wx.showLoading({
-      title: '排名加载中..',
+      title: '点击照片可放大',
     })
   },
   deletePhoto:function(e){
@@ -139,12 +154,23 @@ Page({
   },
   showPhoto:function(e){
     var url = e.currentTarget.dataset.url;
-    setTimeout(function(){
-      wx.previewImage({
-        current: '', // 当前显示图片的http链接
-        urls: [url] // 需要预览的图片http链接列表
-      })
-    },1000);
+    rewardedVideoAd.show() ;
+    rewardedVideoAd.onClose(res => {
+      // 用户点击了【关闭广告】按钮
+      if (res && res.isEnded) {
+        // 正常播放结束，可以下发游戏奖励
+        wx.previewImage({
+          current: '', // 当前显示图片的http链接
+          urls: [url] // 需要预览的图片http链接列表
+        })
+      } else {
+        // 播放中途退出，不下发游戏奖励
+        wx.showToast({
+          title: '看完广告才能看照片哦~',
+          icon:'none'
+        });
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面显示

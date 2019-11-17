@@ -11,3 +11,4 @@
   </view>
   <button class='select-btn'  open-type="getUserInfo" bindgetuserinfo="selectPhoto">选择你和他/她的照片</button>
 </view>
+<ad unit-id="adunit-9599c8cca15ab1a3"></ad>

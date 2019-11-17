@@ -11,6 +11,7 @@
   background-color: #da3a8a;
   color: #fff;
   width: 600rpx;
+  margin-bottom: 100rpx;
 }
 
 .canvasBox{

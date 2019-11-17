@@ -79,13 +79,13 @@
   /* background: pink; */
 }
 .test-item>view{
-  width: 200rpx;
+  width: 240rpx;
 }
 .item-title{
   width: 100rpx;
 }
 .item-value{
-  width: 100rpx;
+  width: 140rpx;
   color: yellow;
   font-weight: bold;
 }
@@ -126,4 +126,5 @@
 .protocol navigator{
   text-decoration: underline;
   color: red;
+  margin-bottom: 50rpx;
 }
