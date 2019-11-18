@@ -38,7 +38,7 @@ Page({
    */
   onReady: function () {
     wx.showLoading({
-      title: '点击照片可放大',
+      title: '',
     })
   },
   deletePhoto:function(e){
@@ -89,6 +89,13 @@ Page({
             self.setData({ rankList: data })
             console.log(data)
             wx.hideLoading()
+            if (!self.hasShowed) {
+              wx.showToast({
+                title: '点击照片可看大图哦~',
+                icon:'none'
+              });
+              self.hasShowed=true;
+            }
             // self.addFace(data,0)
           },
           fail: err => {
