@@ -10,7 +10,7 @@
     <text class='img'>照片</text>
     <text class='img'>删除</text>
   </view>
-  <view wx:for="{{data}}" wx:if="{{item.fileID}}" class='rank-item' wx:key="{{index}}">
+  <view wx:for="{{data}}" wx:if="{{item.fileID}}" class='rank-item' wx:key="{{item.fileID}}">
     <text class='rank'>{{index+1}}</text>
     <text class='name'>{{item.time}}</text>
     <text class='score'>{{item.beauty+10}}</text>

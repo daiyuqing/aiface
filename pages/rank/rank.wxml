@@ -4,7 +4,7 @@
   <text class='score'>评分</text>
   <text class='img'>照片</text>
 </view>
-<view wx:for="{{rankList}}" class='rank-item' wx:key="{{index}}">
+<view wx:for="{{rankList}}" class='rank-item' wx:key="{{item._id}}">
   <text class='rank'>{{index+1}}</text>
   <text class='name'>{{item.nickName}}</text>
   <text class='score' bindtap='deletePhoto' data-id="{{item._id}}">{{item.beauty+10}}</text>
