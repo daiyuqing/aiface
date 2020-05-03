@@ -14,6 +14,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var self=this;
     wx.showShareMenu({
       withShareTicket: true
     })
@@ -29,6 +30,20 @@ Page({
       })
       rewardedVideoAd.onClose((res) => {
         console.log('onClose event emit', res)
+        // 用户点击了【关闭广告】按钮
+        if (res && res.isEnded) {
+          // 正常播放结束，可以下发游戏奖励
+          wx.previewImage({
+            current: '', // 当前显示图片的http链接
+            urls: [self.url] // 需要预览的图片http链接列表
+          })
+        } else {
+          // 播放中途退出，不下发游戏奖励
+          wx.showToast({
+            title: '看完广告才能看照片哦~',
+            icon: 'none'
+          });
+        }
       })
     }
   },
@@ -38,7 +53,7 @@ Page({
    */
   onReady: function () {
     wx.showLoading({
-      title: '点击照片可放大',
+      title: '',
     })
   },
   deletePhoto:function(e){
@@ -89,6 +104,13 @@ Page({
             self.setData({ rankList: data })
             console.log(data)
             wx.hideLoading()
+            if (!self.hasShowed) {
+              wx.showToast({
+                title: '点击照片可看大图哦~',
+                icon:'none'
+              });
+              self.hasShowed=true;
+            }
             // self.addFace(data,0)
           },
           fail: err => {
@@ -153,24 +175,8 @@ Page({
     })
   },
   showPhoto:function(e){
-    var url = e.currentTarget.dataset.url;
+    this.url = e.currentTarget.dataset.url;
     rewardedVideoAd.show() ;
-    rewardedVideoAd.onClose(res => {
-      // 用户点击了【关闭广告】按钮
-      if (res && res.isEnded) {
-        // 正常播放结束，可以下发游戏奖励
-        wx.previewImage({
-          current: '', // 当前显示图片的http链接
-          urls: [url] // 需要预览的图片http链接列表
-        })
-      } else {
-        // 播放中途退出，不下发游戏奖励
-        wx.showToast({
-          title: '看完广告才能看照片哦~',
-          icon:'none'
-        });
-      }
-    })
   },
   /**
    * 生命周期函数--监听页面显示

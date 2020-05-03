@@ -9,7 +9,8 @@ exports.main = async (event, context) => {
 
   return {
     event,
-    access_token: "24.b6178faf16cf4bfd5cce79078ed936e1.2592000.1567595719.282335-16719910",
+    access_token: 
+    "24.5f5d7099f5001adfbba205a88a6afcf8.2592000.1575785804.282335-16719910",
     openid: wxContext.OPENID,
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,
