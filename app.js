@@ -44,8 +44,9 @@ App({
   //把照片存到服务器
   savePhoto:function(path,callback){
     var self=this;
+    var date = new Date().toLocaleDateString().replace(/\//g, '-');
     wx.cloud.uploadFile({
-      cloudPath: 'photo/' + self.globalData.userInfo.nickName +'/'+ new Date().getTime()+'.png',
+      cloudPath: 'newphoto/' + date +'/'+ new Date().getTime()+'.png',
       filePath: path, // 文件路径
       success: res => {
         callback(res.fileID);
