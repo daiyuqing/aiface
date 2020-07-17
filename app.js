@@ -3,11 +3,11 @@ App({
   onLaunch: function () {
     var self=this;
     wx.cloud.init({
-      env: 'aiface-k8f2i',
+      env: 'ai-i57x4',
       traceUser:true
     })
     self.globalData.db = wx.cloud.database({
-      env: 'aiface-k8f2i'
+      env: 'ai-i57x4'
     })
     wx.cloud.callFunction({
       name: 'login',

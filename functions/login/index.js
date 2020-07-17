@@ -1,7 +1,9 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -9,8 +11,7 @@ exports.main = async (event, context) => {
 
   return {
     event,
-    access_token: 
-    "24.5f5d7099f5001adfbba205a88a6afcf8.2592000.1575785804.282335-16719910",
+    access_token: "24.907ecbe51a1b65a0c9e02bfc70906801.2592000.1597546810.282335-16719910",
     openid: wxContext.OPENID,
     appid: wxContext.APPID,
     unionid: wxContext.UNIONID,
