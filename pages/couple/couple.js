@@ -40,15 +40,19 @@ Page({
         wx.showLoading({title: '分析照片中'});
         var path1 = res.tempFilePaths[0];
         var path2 = res.tempFilePaths[1];
-        app.savePhoto(path1,function(fileID1){
-          app.savePhoto(path2,function(fileID2){
-            var data1=wx.getFileSystemManager().readFileSync(path1,'base64');
-            var data2=wx.getFileSystemManager().readFileSync(path2,'base64');
-            self.setData({ 
-              src1: 'data:image/png;base64,' + data1,
-              src2: 'data:image/png;base64,' + data2 
+        var data1=wx.getFileSystemManager().readFileSync(path1,'base64');
+        var data2=wx.getFileSystemManager().readFileSync(path2,'base64');
+        app.censor(data1,function(result){
+          app.censor(data2,function(result){
+            app.savePhoto(path1,function(fileID1){
+              app.savePhoto(path2,function(fileID2){  
+                self.setData({ 
+                  src1: 'data:image/png;base64,' + data1,
+                  src2: 'data:image/png;base64,' + data2 
+                });
+                self.recognize(fileID1, fileID2, data1, data2);
+              });
             });
-            self.recognize(fileID1, fileID2, data1, data2);
           });
         });
       }
