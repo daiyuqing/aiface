@@ -98,6 +98,36 @@ App({
       }
     })
   },
+  //内容审核
+  censor: function (data,callback){
+    var self = this;
+    wx.request({
+      method: 'POST',
+      url: 'https://aip.baidubce.com/rest/2.0/solution/v1/img_censor/v2/user_defined?access_token=' + self.globalData.access_token,
+      data: {
+        'image': data,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success(res) {
+        console.log(res)
+        if(res.data.conclusionType==1){
+          callback()
+        }else{
+          wx.hideLoading()
+          wx.showModal({
+            title: '照片识别失败',
+            content: '上传内容违规~',
+            showCancel: false,
+          })
+        }
+      },
+      fail(error) {
+        callback();
+      }
+    })
+  },
   //人脸搜索
   searchFace: function (face_token,callback){
     var self = this;

@@ -71,70 +71,72 @@ Page({
   },
   recognize:function(data,fileID){
     var self = this;
-    wx.request({
-      method: 'POST',
-      url: 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token='+app.globalData.access_token, //仅为示例，并非真实的接口地址
-      data: {
-        "image_type": "BASE64",
-        'image': data,
-        "face_field": "age,beauty,expression,face_shape,gender,glasses,race,quality,eye_status,emotion,face_type"
-      },
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success(res) {
-        wx.hideLoading()
-        if (res.data.error_code == 0) {
-          var result = res.data.result.face_list[0];
-          if (result.face_type.type =='cartoon'){
+    app.censor(data,function(result){
+      wx.request({
+        method: 'POST',
+        url: 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token='+app.globalData.access_token, //仅为示例，并非真实的接口地址
+        data: {
+          "image_type": "BASE64",
+          'image': data,
+          "face_field": "age,beauty,expression,face_shape,gender,glasses,race,quality,eye_status,emotion,face_type"
+        },
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success(res) {
+          wx.hideLoading()
+          if (res.data.error_code == 0) {
+            var result = res.data.result.face_list[0];
+            if (result.face_type.type =='cartoon'){
+              wx.showModal({
+                title: '照片识别失败',
+                content: '照片中无真实人脸',
+                showCancel: false,
+                duration: 2000
+              })
+              return;
+            }
+            result.beauty = parseInt(result.beauty);
+            if (result.beauty >= 90) { result.beauty = 89 }
+            var face_token = res.data.result.face_list[0].face_token;
+            app.searchFace(face_token,function(){
+              self.setData({ face: result, src: 'data:image/png;base64,' + data  })
+              wx.showModal({
+                title: '照片识别成功',
+                content: '您的照片颜值打分' + (result.beauty + 10) + '分,您可点击右上角分享按钮邀请好友一起测试',
+                showCancel: false,
+                success(res) {
+                  self.saveResult(fileID, result.beauty, result, 1, face_token);
+                }
+              })
+            });
+          } else if (res.data.error_code == 222202){
             wx.showModal({
               title: '照片识别失败',
-              content: '照片中无真实人脸',
+              content: '照片中无人脸',
               showCancel: false,
               duration: 2000
             })
-            return;
-          }
-          result.beauty = parseInt(result.beauty);
-          if (result.beauty >= 90) { result.beauty = 89 }
-          var face_token = res.data.result.face_list[0].face_token;
-          app.searchFace(face_token,function(){
-            self.setData({ face: result, src: 'data:image/png;base64,' + data  })
+          } else{
             wx.showModal({
-              title: '照片识别成功',
-              content: '您的照片颜值打分' + (result.beauty + 10) + '分,您可点击右上角分享按钮邀请好友一起测试',
+              title: '照片识别失败',
+              content: res.data.error_msg,
               showCancel: false,
-              success(res) {
-                self.saveResult(fileID, result.beauty, result, 1, face_token);
-              }
+              duration: 2000
             })
-          });
-        } else if (res.data.error_code == 222202){
-          wx.showModal({
+          }
+        },
+        fail(error){
+          console.log(error)
+          wx.hideLoading();
+          wx.showToast({
             title: '照片识别失败',
-            content: '照片中无人脸',
-            showCancel: false,
-            duration: 2000
-          })
-        } else{
-          wx.showModal({
-            title: '照片识别失败',
-            content: res.data.error_msg,
-            showCancel: false,
+            icon: 'none',
             duration: 2000
           })
         }
-      },
-      fail(error){
-        console.log(error)
-        wx.hideLoading();
-        wx.showToast({
-          title: '照片识别失败',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    })
+      })
+    });
   },
   saveResult: function (fileID, beauty, result, isPublic, face_token){
     var self=this;
