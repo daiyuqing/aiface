@@ -176,7 +176,18 @@ Page({
   },
   showPhoto:function(e){
     this.url = e.currentTarget.dataset.url;
-    rewardedVideoAd.show() ;
+    wx.showModal({
+      title: '提示',
+      content: '看完广告后可查看照片，感谢支持~',
+      success (res) {
+        if (res.confirm) {
+          rewardedVideoAd.show() ;
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+    
   },
   /**
    * 生命周期函数--监听页面显示
