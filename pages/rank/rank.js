@@ -57,7 +57,7 @@ Page({
     })
   },
   deletePhoto:function(e){
-    return;
+    // return;
     var self = this;
     var id = e.currentTarget.dataset.id;
     wx.cloud.callFunction({

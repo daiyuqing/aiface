@@ -3,11 +3,11 @@ App({
   onLaunch: function () {
     var self=this;
     wx.cloud.init({
-      env: 'ai-i57x4',
+      env: 'ai2-4guv919ha7d2b68c',
       traceUser:true
     })
     self.globalData.db = wx.cloud.database({
-      env: 'ai-i57x4'
+      env: 'ai2-4guv919ha7d2b68c'
     })
     wx.cloud.callFunction({
       name: 'login',
@@ -44,9 +44,9 @@ App({
   //把照片存到服务器
   savePhoto:function(path,callback){
     var self=this;
-    var date = new Date().toLocaleDateString().replace(/\//g, '-');
+    let date=new Date();
     wx.cloud.uploadFile({
-      cloudPath: 'newphoto/' + date +'/'+ new Date().getTime()+'.png',
+      cloudPath: 'newphoto/' + date.getFullYear() +'/'+(date.getMonth()+1)+'/'+date.getDate()+'/'+ new Date().getTime()+'.png',
       filePath: path, // 文件路径
       success: res => {
         callback(res.fileID);
@@ -101,6 +101,8 @@ App({
   //内容审核
   censor: function (data,callback){
     var self = this;
+    callback()
+    return;
     wx.request({
       method: 'POST',
       url: 'https://aip.baidubce.com/rest/2.0/solution/v1/img_censor/v2/user_defined?access_token=' + self.globalData.access_token,

@@ -1,94 +1,95 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": []
-	},
-	"cloudfunctionRoot": "functions/",
-	"setting": {
-		"urlCheck": true,
-		"es6": true,
-		"enhance": false,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": false,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.9.3",
-	"appid": "wx1c8df3765de63e6b",
-	"projectname": "aiface",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 3,
-			"list": [
-				{
-					"id": -1,
-					"name": "couple",
-					"pathName": "pages/couple/couple",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "rank",
-					"pathName": "pages/rank/rank",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/user/user",
-					"pathName": "pages/user/user",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/protocol/protocol",
-					"pathName": "pages/protocol/protocol",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "cloudfunctionRoot": "functions/",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": false,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "useMultiFrameRuntime": true,
+    "bundle": false,
+    "useApiHook": true,
+    "useApiHostProcess": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.9.3",
+  "appid": "wx1c8df3765de63e6b",
+  "projectname": "aiface",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "condition": {
+    "search": {
+      "list": []
+    },
+    "conversation": {
+      "list": []
+    },
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "couple",
+          "pathName": "pages/couple/couple",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "rank",
+          "pathName": "pages/rank/rank",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/user/user",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/protocol/protocol",
+          "pathName": "pages/protocol/protocol",
+          "scene": null
+        }
+      ]
+    }
+  }
 }
