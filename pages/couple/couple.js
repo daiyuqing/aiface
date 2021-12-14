@@ -42,8 +42,8 @@ Page({
         var path2 = res.tempFilePaths[1];
         var data1=wx.getFileSystemManager().readFileSync(path1,'base64');
         var data2=wx.getFileSystemManager().readFileSync(path2,'base64');
-        app.censor(data1,function(result){
-          app.censor(data2,function(result){
+        app.censor(path1,function(result){
+          app.censor(path2,function(result){
             app.savePhoto(path1,function(fileID1){
               app.savePhoto(path2,function(fileID2){  
                 self.setData({ 

@@ -61,7 +61,7 @@ Page({
         var path = res.tempFilePaths[0];
         app.savePhoto(path,function(fileID){
           var data=wx.getFileSystemManager().readFileSync(path,'base64');
-          self.recognize(data, fileID);
+          self.recognize(data, fileID,path);
         });
       },
       fail:error=>{
@@ -69,9 +69,9 @@ Page({
       }
     })
   },
-  recognize:function(data,fileID){
+  recognize:function(data,fileID,path){
     var self = this;
-    app.censor(data,function(result){
+    app.censor(path,function(result){
       wx.request({
         method: 'POST',
         url: 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token='+app.globalData.access_token, //仅为示例，并非真实的接口地址
