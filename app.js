@@ -101,14 +101,25 @@ App({
   //图片审核
   censor: function (path,callback){
     var self = this;
-    var data=wx.getFileSystemManager().readFileSync(path);
-    wx.cloud.callFunction({
-      name:'imgSecCheck',
-      data:{
-        img:data
-      },
-      success:function(){
-        callback()
+    wx.getImageInfo({
+      src: path,
+      success (res) {
+        console.log(res.width)
+        console.log(res.height)
+        if(res.width<750&&res.height<1334){
+          var data=wx.getFileSystemManager().readFileSync(path);
+          wx.cloud.callFunction({
+            name:'imgSecCheck',
+            data:{
+              img:data
+            },
+            success:function(){
+              callback()
+            }
+          })
+        }else{
+          callback()
+        }
       }
     })
     
